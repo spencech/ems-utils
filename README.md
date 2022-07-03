@@ -1,9 +1,12 @@
+# EMS Utils
+Utility methods that are frequently used in Educational Media Solutions web applications.
+
 # Methods
 
 ## alphabetize(...parameters: any[]): any
 Can be used as the callback argument to Array.sort
 
-	(["a","c", "d", "b"]).sort(alphabetize); // ["a", "b", "c", "d", "e"]
+	(["e","a","c", "d", "b"]).sort(alphabetize); // ["a", "b", "c", "d", "e"]
 
 Also can be used to alphabetize array of objects using key (note: this method mutates original array)
 
@@ -76,7 +79,7 @@ Returns get parameters from the browser url
 ## kebab(e: string): string
 Converts string to kebab case
 
-	snakecase("Hello Big_World 2022-01-01"); // "hello-big-world-2022-01-01"
+	kebab("Hello Big_World 2022-01-01"); // "hello-big-world-2022-01-01"
 
 ## replaceItem(array: any[], item: any, key: string = 'id', position: string = 'current'): any
 Swaps an item in an array with a newer value

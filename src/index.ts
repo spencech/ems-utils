@@ -30,11 +30,29 @@ export function empty(e: any): boolean {
   return falsy(e);
 }
 
-export function alphabetize(a: string, b: string) {
-  if (a > b) return 1;
-  if (a < b) return -1;
-  return 0;
+export function alphabetize(...parameters: any[]):any {
+
+  if(typeof parameters[0] === "string") {
+    //if this method is supplied as a callback to Array.sort
+    const a = parameters[0];
+    const b = parameters[1];
+    if (a > b) return 1;
+    if (a < b) return -1;
+    return 0;
+  } else {
+    //if we're sorting a list with a supplied key to alphabetize
+    const list = parameters[0];
+    const property = parameters[1];
+    list.sort((a:any,b:any) => {
+      if(a[property] > b[property]) return 1;
+      if(a[property] < b[property]) return -1;
+      return 0;
+    });
+    return list;
+  }
+  
 }
+
 
 export function trim(e: string): string {
   if (_.isEmpty(e)) return e;

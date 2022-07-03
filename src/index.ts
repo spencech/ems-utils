@@ -1,7 +1,6 @@
 import * as _ from 'underscore';
 import * as $ from 'jquery';
 
-
 export function alphabetize(...parameters: any[]): any {
   if (typeof parameters[0] === 'string') {
     // if this method is supplied as a callback to Array.sort
@@ -43,7 +42,7 @@ export function delay(method: () => void, ms: number = 0): number {
   return window.setTimeout(method, ms);
 }
 
-export function download(content: string, name: string, extension: string = "csv") {
+export function download(content: string, name: string, extension: string = 'csv') {
   const blob = new Blob([content]);
   name = kebab(name);
 
@@ -151,7 +150,7 @@ export function replaceItem(array: any[], item: any, key: string = 'id', positio
 
 export function snakecase(e: string): string {
   if (_.isEmpty(e)) return e;
-  return e.toLowerCase().replace(/\s+/gim, '_').replace(/-/g,"_").replace(/_+/g,"_");
+  return e.toLowerCase().replace(/\s+/gim, '_').replace(/-/g, '_').replace(/_+/g, '_');
 }
 
 export function tick(returnValue?: any): Promise<any> {
@@ -180,7 +179,7 @@ export function trim(e: string): string {
   return e.replace(/^\s+/, '').replace(/\s+$/, '');
 }
 
-export function truthy(e:any): boolean {
+export function truthy(e: any): boolean {
   return !falsy(e);
 }
 

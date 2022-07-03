@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import * as $ from 'jquery';
 
-function trace(...parameters: any[]) {
+export function trace(...parameters: any[]) {
   if (!getparams().debug) return;
 
   for (let i = 0, count = parameters.length; i < count; i++) {
@@ -10,46 +10,46 @@ function trace(...parameters: any[]) {
   }
 }
 
-function clone(obj: any): any {
+export function clone(obj: any): any {
   if (obj === null || obj === undefined) return obj;
   return JSON.parse(JSON.stringify(obj));
 }
 
-function delay(method: () => void, ms: number = 0): number {
+export function delay(method: () => void, ms: number = 0): number {
   return window.setTimeout(method, ms);
 }
 
-function falsy(e: any): boolean {
+export function falsy(e: any): boolean {
   if (typeof e === 'string') return _.isEmpty(e.replace(/\s+/gim, ''));
   if (typeof e === 'boolean') return e === false;
   if (!isNaN(e)) return e === 0;
   return _.isEmpty(e);
 }
 
-function empty(e: any): boolean {
+export function empty(e: any): boolean {
   return falsy(e);
 }
 
-function alphabetize(a: string, b: string) {
+export function alphabetize(a: string, b: string) {
   if (a > b) return 1;
   if (a < b) return -1;
   return 0;
 }
 
-function trim(e: string): string {
+export function trim(e: string): string {
   if (_.isEmpty(e)) return e;
   return e.replace(/^\s+/, '').replace(/\s+$/, '');
 }
 
-function snakecase(e: string): string {
+export function snakecase(e: string): string {
   return e.toLowerCase().replace(/\s+/gim, '_');
 }
 
-function kebab(e: string): string {
+export function kebab(e: string): string {
   return e.toLowerCase().replace(/\s+/gim, '-').replace(/_/g, '-').replace(/-+/g, '-');
 }
 
-function getparams(requestedProperty?: string): any {
+export function getparams(requestedProperty?: string): any {
   const vars = {} as any;
   const parts = window.location.href.replace(/[?&#]+([^=&]+)=([^&]*)/gi, ((m: any, key: string, value: any) => {
     vars[key] = value;
@@ -65,7 +65,7 @@ function getparams(requestedProperty?: string): any {
   return vars;
 }
 
-function download(content: string, name: string) {
+export function download(content: string, name: string) {
   const blob = new Blob([content]);
   name = kebab(name);
 
@@ -80,7 +80,7 @@ function download(content: string, name: string) {
   }
 }
 
-function getLargestRemainder(values: number[], desiredSum: number) {
+export function getLargestRemainder(values: number[], desiredSum: number) {
   let sum = 0;
   let valueParts = values.map((value: number, index: number) => {
     const integerValue = value ?? 0;
@@ -107,7 +107,7 @@ function getLargestRemainder(values: number[], desiredSum: number) {
   return valueParts.sort((a, b) => a.originalIndex - b.originalIndex).map((p) => p.integer);
 }
 
-function validateEmail(email: string | null): RegExpMatchArray | null {
+export function validateEmail(email: string | null): RegExpMatchArray | null {
   if (!email) return null;
 
   return String(email)
@@ -117,13 +117,13 @@ function validateEmail(email: string | null): RegExpMatchArray | null {
     );
 }
 
-function timestamp(date?: Date, includeTime: boolean = true): string {
+export function timestamp(date?: Date, includeTime: boolean = true): string {
   const info = dateStrings(date);
   const time = `${info.time}:${info.seconds}`;
   return `${info.year}-${info.month}-${info.date}${includeTime ? time : ''}`;
 }
 
-function dateStrings(date?: Date) {
+export function dateStrings(date?: Date) {
   date = date ?? new Date();
   return {
     year: date.getFullYear(),
@@ -134,13 +134,13 @@ function dateStrings(date?: Date) {
   };
 }
 
-function tick(returnValue?: any) {
+export function tick(returnValue?: any) {
   return new Promise((resolve: (response: any) => void, reject: (response: any) => void) => {
     delay(() => resolve(returnValue));
   });
 }
 
-function replaceItem(array: any[], item: any, key: string = 'id', position: string = 'current'): any {
+export function replaceItem(array: any[], item: any, key: string = 'id', position: string = 'current'): any {
   const lookup = {} as any;
   lookup[key] = item[key];
 
@@ -163,7 +163,7 @@ function replaceItem(array: any[], item: any, key: string = 'id', position: stri
   return item;
 }
 
-function viewport(el: HTMLElement, percentVisible: number = 100) {
+export function viewport(el: HTMLElement, percentVisible: number = 100) {
   const rect = el.getBoundingClientRect();
   const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
@@ -173,12 +173,6 @@ function viewport(el: HTMLElement, percentVisible: number = 100) {
   );
 }
 
-function focus(selector: string): number {
+export function focus(selector: string): number {
   return delay(() => $(selector).focus());
-}
-
-module.exports = {
-  trace, empty, delay, falsy, clone, alphabetize, trim, snakecase, 
-  kebab, getparams, download, getLargestRemainder, validateEmail, timestamp, dateStrings,
-  tick, replaceItem, viewport, focus
 }

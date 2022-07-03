@@ -22,7 +22,7 @@ export function delay(method: () => void, ms: number = 0): number {
 export function falsy(e: any): boolean {
   if (typeof e === 'string') return _.isEmpty(e.replace(/\s+/gim, ''));
   if (typeof e === 'boolean') return e === false;
-  if (!isNaN(e)) return e === 0;
+  if (!isNaN(parseInt(e))) return e === 0;
   return _.isEmpty(e);
 }
 

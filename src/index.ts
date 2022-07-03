@@ -10,6 +10,26 @@ export function trace(...parameters: any[]) {
   }
 }
 
+export function falsy(e: any): boolean {
+  if (typeof e === 'string' && trim(e).match(/^false$/i)) return true;
+  if (typeof e === 'string') return _.isEmpty(e.replace(/\s+/gim, ''));
+  if (typeof e === 'boolean') return e === false;
+  if (!isNaN(parseInt(e, 10))) return e === 0;
+  return _.isEmpty(e);
+}
+
+export function truthy(e:any): boolean {
+  return !falsy(e);
+}
+
+export function empty(e: any): boolean {
+  return falsy(e);
+}
+
+export function isset(e: any): boolean {
+  return truthy(e);
+}
+
 export function clone(obj: any): any {
   if (obj === null || obj === undefined) return obj;
   return JSON.parse(JSON.stringify(obj));
@@ -19,16 +39,7 @@ export function delay(method: () => void, ms: number = 0): number {
   return window.setTimeout(method, ms);
 }
 
-export function falsy(e: any): boolean {
-  if (typeof e === 'string') return _.isEmpty(e.replace(/\s+/gim, ''));
-  if (typeof e === 'boolean') return e === false;
-  if (!isNaN(parseInt(e, 10))) return e === 0;
-  return _.isEmpty(e);
-}
 
-export function empty(e: any): boolean {
-  return falsy(e);
-}
 
 export function alphabetize(...parameters: any[]): any {
   if (typeof parameters[0] === 'string') {
@@ -57,10 +68,12 @@ export function trim(e: string): string {
 }
 
 export function snakecase(e: string): string {
-  return e.toLowerCase().replace(/\s+/gim, '_');
+  if (_.isEmpty(e)) return e;
+  return e.toLowerCase().replace(/\s+/gim, '_').replace(/-/g,"_").replace(/_+/g,"_");
 }
 
 export function kebab(e: string): string {
+  if (_.isEmpty(e)) return e;
   return e.toLowerCase().replace(/\s+/gim, '-').replace(/_/g, '-').replace(/-+/g, '-');
 }
 
@@ -80,15 +93,15 @@ export function getparams(requestedProperty?: string): any {
   return vars;
 }
 
-export function download(content: string, name: string) {
+export function download(content: string, name: string, extension: string = "csv") {
   const blob = new Blob([content]);
   name = kebab(name);
 
-  if ((window.navigator as any).msSaveOrOpenBlob) (window.navigator as any).msSaveBlob(blob, `${name}.csv`);
+  if ((window.navigator as any).msSaveOrOpenBlob) (window.navigator as any).msSaveBlob(blob, `${name}.${extension}`);
   else {
     const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(blob);
-    a.download = `${name}.csv`;
+    a.download = `${name}.${extension}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -149,7 +162,7 @@ export function dateStrings(date?: Date) {
   };
 }
 
-export function tick(returnValue?: any) {
+export function tick(returnValue?: any): Promise<any> {
   return new Promise((resolve: (response: any) => void, reject: (response: any) => void) => {
     delay(() => resolve(returnValue));
   });
@@ -178,7 +191,7 @@ export function replaceItem(array: any[], item: any, key: string = 'id', positio
   return item;
 }
 
-export function viewport(el: HTMLElement, percentVisible: number = 100) {
+export function viewport(el: HTMLElement, percentVisible: number = 100): boolean {
   const rect = el.getBoundingClientRect();
   const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 

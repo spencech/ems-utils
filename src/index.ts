@@ -124,7 +124,7 @@ export function timestamp(date?: Date, includeTime: boolean = true): string {
 }
 
 export function dateStrings(date?: Date) {
-  date = date ?? new Date();
+  date = date || new Date();
   return {
     year: date.getFullYear(),
     month: (date.getMonth() + 1).toString().padStart(2, '0'),

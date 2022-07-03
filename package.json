@@ -1,6 +1,6 @@
 {
   "name": "ems-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   "homepage": "https://github.com/spencech/ems-utils#readme",
   "devDependencies": {
     "@types/jquery": "^3.5.14",
+    "@types/node": "^18.0.0",
     "@types/underscore": "^1.11.4",
     "prettier": "^2.7.1",
     "tslint": "^6.1.3",
@@ -40,7 +41,7 @@
   "files": [
     "lib/**/*"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "jquery": "^3.6.0",
     "underscore": "^1.13.4"
   }

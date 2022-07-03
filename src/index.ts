@@ -83,7 +83,7 @@ export function download(content: string, name: string) {
 export function getLargestRemainder(values: number[], desiredSum: number) {
   let sum = 0;
   let valueParts = values.map((value: number, index: number) => {
-    const integerValue = value ?? 0;
+    const integerValue = value || 0;
     sum += integerValue;
     return {
       integer: integerValue,
